@@ -10,7 +10,7 @@ import Home from "./pages/index";
 import About from "./pages/about";
 
 function App() {
-  // Loading state (✅ hooks must always run in the same order)
+  // Loading state
   const [loading, setLoading] = useState(true);
 
   // Cursor state
@@ -19,32 +19,27 @@ function App() {
 
   const CURSOR_SIZE = 22;
 
-  // Loading timer
+  // ✅ Single source of truth for loading
   useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 3000);
+    const t = setTimeout(() => setLoading(false), 2400); // match loader animation length
     return () => clearTimeout(t);
   }, []);
 
   // Track mouse
   useEffect(() => {
-    const onMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
+    const onMove = (e) => setMousePosition({ x: e.clientX, y: e.clientY });
     window.addEventListener("mousemove", onMove, { passive: true });
     return () => window.removeEventListener("mousemove", onMove);
   }, []);
 
-  // Bulletproof hover detection (event delegation)
+  // Hover detection
   useEffect(() => {
     const isHoverTarget = (el) => {
       if (!el || typeof el.closest !== "function") return false;
       return !!el.closest("a, button, [role='button'], [data-cursor='hover']");
     };
 
-    const onOver = (e) => {
-      setCursorVariant(isHoverTarget(e.target) ? "hover" : "default");
-    };
-
+    const onOver = (e) => setCursorVariant(isHoverTarget(e.target) ? "hover" : "default");
     const onOut = (e) => {
       if (!isHoverTarget(e.relatedTarget)) setCursorVariant("default");
     };
@@ -58,7 +53,7 @@ function App() {
     };
   }, []);
 
-  // Motion variants (position + scale only)
+  // Motion variants (cursor)
   const variants = useMemo(() => {
     const offset = CURSOR_SIZE / 2;
     return {
@@ -79,51 +74,46 @@ function App() {
 
   return (
     <BrowserRouter>
-      {loading ? (
-        <Loading />
-      ) : (
-        <>
-          {/* Custom Cursor */}
-          <motion.div
-            className={`cursor desktop ${cursorVariant === "hover" ? "is-hover" : ""}`}
-            variants={variants}
-            animate={cursorVariant}
-            initial={false}
-            aria-hidden="true"
-            style={{
-              position: "fixed",
-              left: 0,
-              top: 0,
-              zIndex: 99999,
-              pointerEvents: "none",
-              willChange: "transform",
-            }}
-          />
+      <Loading isLoading={loading}>
+        {/* Custom Cursor */}
+        <motion.div
+          className={`cursor desktop ${cursorVariant === "hover" ? "is-hover" : ""}`}
+          variants={variants}
+          animate={cursorVariant}
+          initial={false}
+          aria-hidden="true"
+          style={{
+            position: "fixed",
+            left: 0,
+            top: 0,
+            zIndex: 99999,
+            pointerEvents: "none",
+            willChange: "transform",
+          }}
+        />
 
-
-          <ReactLenis
-            root
-            options={{
-              prevent: (node) => {
-                if (!node) return false;
-                let el = node;
-                while (el) {
-                  if (el.getAttribute && el.getAttribute("data-lenis-prevent") !== null) return true;
-                  el = el.parentNode;
-                }
-                return false;
-              },
-            }}
-          >
-            <Routes>
-              <Route path="/" element={<Layout />}>
-                <Route index element={<Home />} />
-                <Route path="about" element={<About />} />
-              </Route>
-            </Routes>
-          </ReactLenis>
-        </>
-      )}
+        <ReactLenis
+          root
+          options={{
+            prevent: (node) => {
+              if (!node) return false;
+              let el = node;
+              while (el) {
+                if (el.getAttribute && el.getAttribute("data-lenis-prevent") !== null) return true;
+                el = el.parentNode;
+              }
+              return false;
+            },
+          }}
+        >
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="about" element={<About />} />
+            </Route>
+          </Routes>
+        </ReactLenis>
+      </Loading>
     </BrowserRouter>
   );
 }

@@ -77,6 +77,24 @@ a {
   color: var(--white);
 }
 
+/* ===============
+   Universal responsive
+==================*/
+
+.mobile {
+  display: none;
+}
+
+@media (max-width: 650px) {
+  .desktop {
+    display: none;
+  }
+
+  .mobile {
+    display: block;
+  }
+}
+
 
 /* ===============
    Cursor
@@ -119,10 +137,12 @@ a {
 .loader__center {
   position: absolute;
   inset: 0;
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   text-align: center;
-  padding: 24px;
+  padding: 2rem 1rem;
 }
 
 .loader__title {
