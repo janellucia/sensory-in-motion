@@ -1,0 +1,238 @@
+/* ===============================
+   Above-the-fold
+================================ */
+
+.home-atf {
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100vw;
+}
+
+.home-atf h1 {
+  margin: 0 auto;
+  align-self: flex-end;
+}
+
+.home-atf-image {
+  width: 225px;
+  height: 150px;
+  background-color: red;
+  align-self: flex-start;
+}
+
+/* ===============================
+   GSAP Pinned Projects
+================================ */
+
+.gsapProjects {
+  height: 100vh;
+  width: 95.5vw;
+  display: grid;
+  grid-template-columns: 180px 1fr 260px;
+  gap: 1rem;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+/* Side columns */
+.projectsLeft,
+.projectsRight {
+  position: sticky;
+  top: 24px;
+  height: calc(100vh - 48px);
+  display: flex;
+  gap: 0;
+  align-items: center;
+  z-index: 2;
+}
+
+/* ===============================
+   Counter
+================================ */
+
+.counter {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  will-change: transform;
+}
+
+.counterBig {
+  display: inline-block;
+  width: 2ch;
+  text-align: left;
+
+  font-size: clamp(64px, 7vw, 120px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+
+  transform: translateZ(0);
+}
+
+.counterSmall {
+  font-size: 22px;
+  letter-spacing: 0.02em;
+  opacity: 0.9;
+
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* ===============================
+   Center area (GSAP track)
+================================ */
+
+.projectsCenter {
+  height: calc(100vh - 48px);
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.projectsTrack {
+  display: grid;
+  row-gap: 0;
+  will-change: transform;
+}
+
+/* Items */
+.projectItem {
+  min-height: 55vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  opacity: 0.55;
+  transform: scale(0.985);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.projectItem.isActive {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.projectLink {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Media */
+.projectMediaWrap {
+  width: min(720px, 52vw);
+  max-height: 70vh;
+  display: grid;
+  place-items: center;
+}
+
+.projectMedia {
+  width: 100%;
+  height: auto;
+  max-height: 70vh;
+  object-fit: cover;
+  display: block;
+}
+
+/* Skills */
+.projectSkills {
+  margin-top: 12px;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  opacity: 0.7;
+  text-transform: lowercase;
+}
+
+/* ===============================
+   Right Titles 
+================================ */
+
+.projectsRight {
+  justify-content: center;
+}
+
+.titlesShell {
+  height: 92vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.titlesShell .navItem {
+  all: unset;
+  cursor: pointer;
+
+  position: absolute;
+  right: 0;
+  top: 0;
+  text-align: right;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+  padding: 2px 0;
+  font-size: 33px;
+  opacity: 0.55;
+  will-change: transform, opacity;
+}
+
+.titlesShell .navItem:hover {
+  opacity: 0.6;
+}
+
+.titlesShell .navItem.isActive {
+  opacity: 1;
+}
+
+/* ===============================
+   Responsive
+================================ */
+
+@media (max-width: 900px) {
+  .gsapProjects {
+    grid-template-columns: 1fr;
+    padding: 18px;
+  }
+
+  .projectsLeft,
+  .projectsRight {
+    position: relative;
+    top: 0;
+    height: auto;
+  }
+
+  .projectsRight {
+    order: 3;
+    align-items: flex-start;
+  }
+
+  .projectMediaWrap {
+    width: min(555px, 92vw);
+  }
+
+  /* Mobile: normal stacked list */
+  .titlesShell {
+    height: auto;
+    overflow: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .titlesShell .navItem {
+    position: static;
+    display: block;
+    opacity: 1 !important;
+    transform: none !important;
+    text-align: left;
+    padding: 6px 0;
+  }
+}

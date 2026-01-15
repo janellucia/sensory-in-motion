@@ -1,0 +1,139 @@
+@font-face {
+  font-family: Compagnon Medium;
+  src: url("../fonts/Compagnon-Medium.woff2") format("woff");
+}
+
+@font-face {
+  font-family: Akkurat Mono;
+  src: url("../fonts/Akkurat-Mono.woff2") format("woff");
+}
+
+:root {
+  --white: #F8F8F5;
+  --neutral: #D8D8D5;
+  --black: #000;
+  --purple: #989ec0;
+  --green: #66ef66;
+  --red: #e91e27;
+  --headerFont: 'Compagnon Medium', sans-serif;
+  --bodyFont: 'Akkurat Mono', mono;
+}
+
+
+#root {
+  width: 100%;
+  max-width: 1280px;
+  padding: .5rem;
+}
+
+body {
+  position: relative;
+  font-family: var(--bodyFont);
+  font-size: 16px;
+  color: var(--white);
+  background-color: var(--black);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--headerFont);
+  text-transform: uppercase;
+  /* font-family: "kepler-std-display", serif ; */
+}
+
+h1 {
+  font-size: 66px;
+  font-size: 44px;
+}
+
+h2 {
+  font-size: 44px;
+  font-size: 33px;
+}
+
+h3 {
+  font-size: 33px;
+  font-size: 22px;
+}
+
+h4 {
+  font-size: 22px;
+  font-size: 20px;
+}
+
+h5 {
+  font-size: 18px;
+}
+
+h6 {
+  font-size: 16px;
+}
+
+a {
+  color: var(--white);
+}
+
+
+/* ===============
+   Cursor
+==================*/
+.cursor.desktop {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+
+  background: var(--green);
+  opacity: 1;
+
+  mix-blend-mode: normal;
+  pointer-events: none;
+}
+
+/* Hover state = inversion window */
+.cursor.desktop.is-hover {
+  mix-blend-mode: difference;
+}
+
+/* ===============
+   Loading Page
+==================*/
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--white);
+  overflow: hidden;
+}
+
+.loader__wipe {
+  position: absolute;
+  inset: 0;
+  background: var(--white);
+  will-change: transform;
+}
+
+.loader__center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 24px;
+}
+
+.loader__title {
+  font-size: clamp(33px, 4vw, 55px);
+  letter-spacing: -0.02em;
+  color: var(--black);
+  margin: 0;
+}
+
+.loader__sub {
+  margin: 10px 0 0;
+  color: var(--black);
+  text-transform: uppercase;
+}
