@@ -22,7 +22,7 @@
 
 #root {
   width: 100%;
-  max-width: 1280px;
+  max-width: 1800px;
   padding: .5rem;
 }
 
@@ -32,6 +32,11 @@ body {
   font-size: 16px;
   color: var(--white);
   background-color: var(--black);
+}
+
+*::selection {
+  background-color: var(--red);
+  color: var(--white);
 }
 
 h1,
@@ -46,8 +51,7 @@ h6 {
 }
 
 h1 {
-  font-size: 66px;
-  font-size: 44px;
+  font-size: 33px;
 }
 
 h2 {
@@ -75,6 +79,8 @@ h6 {
 
 a {
   color: var(--white);
+  text-transform: uppercase;
+  text-decoration: none;
 }
 
 /* ===============

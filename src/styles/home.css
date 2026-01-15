@@ -1,28 +1,4 @@
 /* ===============================
-   Above-the-fold
-================================ */
-
-.home-atf {
-  height: 70vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100vw;
-}
-
-.home-atf h1 {
-  margin: 0 auto;
-  align-self: flex-end;
-}
-
-.home-atf-image {
-  width: 225px;
-  height: 150px;
-  background-color: red;
-  align-self: flex-start;
-}
-
-/* ===============================
    GSAP Pinned Projects
 ================================ */
 

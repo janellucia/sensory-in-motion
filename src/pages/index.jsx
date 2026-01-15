@@ -7,19 +7,11 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
 import "../styles/home.css";
+import "../styles/home-atf.css";
 import projects from "./index-data";
+import HomeATF from "../components/home-atf";
 
 gsap.registerPlugin(ScrollTrigger);
-
-// 🩵 ATF Entrance Animation
-const containerVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 1, ease: [0.2, 0.8, 0.2, 1] },
-  },
-};
 
 // 🩵 Project Slider
 function pad2(n) {
@@ -215,14 +207,7 @@ export default function Home() {
   return (
     <motion.main>
       {/* ATF */}
-      <motion.section className="home-atf">
-        <motion.h1 variants={containerVariants} initial="hidden" animate="visible">
-          Creative Motion-driven developer<br />
-          specializing in interaction, timing,<br />
-          & performance-driven websites.
-        </motion.h1>
-        <div className="home-atf-image"></div>
-      </motion.section>
+      <HomeATF />
 
       {/* PROJECTS */}
       <section className="gsapProjects" ref={sectionRef}>

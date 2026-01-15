@@ -1,0 +1,168 @@
+/* src/components/home-atf.css */
+/* Layout-only. No fonts. No background. No explicit colors. */
+
+.homeATF {
+  width: 100%;
+  height: 77svh;
+  position: relative;
+  overflow: hidden;
+
+  /* shared layout tokens */
+  --splitX: 28%;
+  --imgZone: clamp(220px, 32vh, 330px);
+  --padX: 1.5rem;
+  --padY: 1rem;
+
+  --lineOpacity: 0.06;
+  --lineW: 1px;
+}
+
+/* outer frame */
+.homeATF::before,
+.homeATF::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: var(--lineW);
+  background: currentColor;
+  opacity: var(--lineOpacity);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.homeATF::before {
+  left: 0;
+}
+
+.homeATF::after {
+  right: 0;
+}
+
+/* center vertical divider */
+.homeATF__vline {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--splitX);
+  width: var(--lineW);
+  background: currentColor;
+  opacity: var(--lineOpacity);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* horizontal divider (top of image zone) */
+.homeATF__hline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% - var(--imgZone));
+  height: var(--lineW);
+  background: currentColor;
+  opacity: var(--lineOpacity);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* TOP RIGHT TEXT REGION */
+.homeATF__text {
+  position: absolute;
+  left: var(--splitX);
+  right: 0;
+  top: 0;
+  bottom: var(--imgZone);
+
+  padding-left: var(--padX);
+  padding-right: var(--padX);
+  padding-top: clamp(28px, 6vh, 92px);
+  padding-bottom: var(--padY);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+/* KEY FIX: let it use the full column width */
+.homeATF__copy {
+  margin: 0;
+  overflow: hidden;
+}
+
+/* LINK aligned with image zone top padding edge */
+.homeATF__meta {
+  position: absolute;
+  left: var(--splitX);
+  top: calc(100% - var(--imgZone) + var(--padY));
+  padding-left: var(--padX);
+  z-index: 6;
+}
+
+.homeATF__about {
+  text-transform: uppercase;
+}
+
+/* BOTTOM LEFT IMAGE ZONE */
+.homeATF__imageZone {
+  position: absolute;
+  left: 0;
+  right: calc(100% - var(--splitX));
+  top: calc(100% - var(--imgZone));
+  bottom: 0;
+
+  padding: var(--padY) var(--padX);
+
+  display: flex;
+  align-items: flex-start;
+  /* KEY FIX: stops it being pushed far down */
+  justify-content: flex-start;
+}
+
+.homeATF__img {
+  width: min(560px, 100%);
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .homeATF {
+    height: auto;
+    min-height: 100svh;
+  }
+
+  .homeATF__vline,
+  .homeATF__hline,
+  .homeATF::before,
+  .homeATF::after {
+    display: none;
+  }
+
+  .homeATF__text,
+  .homeATF__meta,
+  .homeATF__imageZone {
+    position: relative;
+    inset: auto;
+  }
+
+  .homeATF__text {
+    padding: clamp(22px, 6vw, 34px);
+    padding-top: clamp(28px, 9vw, 48px);
+  }
+
+  .homeATF__meta {
+    padding: 0 clamp(22px, 6vw, 34px) 14px;
+  }
+
+  .homeATF__imageZone {
+    padding: clamp(16px, 6vw, 34px);
+  }
+
+  .homeATF__img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+  }
+}
