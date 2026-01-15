@@ -19,7 +19,7 @@ function App() {
 
   const CURSOR_SIZE = 22;
 
-  // ✅ Single source of truth for loading
+  // 🩵 Single source of truth for loading
   useEffect(() => {
     const t = setTimeout(() => setLoading(false), 2400); // match loader animation length
     return () => clearTimeout(t);
@@ -32,7 +32,7 @@ function App() {
     return () => window.removeEventListener("mousemove", onMove);
   }, []);
 
-  // Hover detection
+  // Mouse Hover detection
   useEffect(() => {
     const isHoverTarget = (el) => {
       if (!el || typeof el.closest !== "function") return false;
@@ -53,7 +53,7 @@ function App() {
     };
   }, []);
 
-  // Motion variants (cursor)
+  // Mouse Motion variants
   const variants = useMemo(() => {
     const offset = CURSOR_SIZE / 2;
     return {

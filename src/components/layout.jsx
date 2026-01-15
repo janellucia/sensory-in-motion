@@ -11,7 +11,7 @@ const Layout = () => {
     <motion.div layout >
       <Header />
       <div>
-        <Outlet /> {/* Content specific to the route will be rendered here */}
+        <Outlet />
       </div>
       <Footer />
     </motion.div>

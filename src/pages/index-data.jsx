@@ -3,8 +3,8 @@ import Project1 from "../assets/home/1.jpg";
 import Project2 from "../assets/home/2.jpg";
 import Project3 from "../assets/home/3.jpg";
 import Project4 from "../assets/home/4.jpg";
-import Project5 from "../assets/home/5.jpg";
-import Project6 from "../assets/home/6.jpg";
+// import Project5 from "../assets/home/5.jpg";
+// import Project6 from "../assets/home/6.jpg";
 
 
 const projects = [

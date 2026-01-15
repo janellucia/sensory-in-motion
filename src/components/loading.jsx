@@ -7,8 +7,6 @@ export default function Loading({ isLoading, children }) {
       <AnimatePresence mode="wait">
         {isLoading && <LoaderOverlay key="loader" />}
       </AnimatePresence>
-
-      {/* App is ALWAYS rendered underneath (no blank gap) */}
       {children}
     </>
   );

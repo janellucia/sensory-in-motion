@@ -80,7 +80,7 @@ export default function Home() {
     const items = itemRefs.current.filter(Boolean);
     if (!items.length) return;
 
-    // Clean up triggers (hot reload / route changes)
+    // (hot reload / route changes)
     ScrollTrigger.getAll().forEach((t) => t.kill());
 
     const setup = () => {
@@ -131,8 +131,7 @@ export default function Home() {
           const yTop = (i) => i * titleStep;
           const yBottom = (i) => available - (total - 1 - i) * titleStep;
 
-          // ✅ overlap tuning:
-          // lead = 0.5 means "next title begins when current is halfway"
+          // overlap tuning:
           const lead = 0.4;
           const dur = 1 + lead; // 1.5 steps
 
@@ -140,13 +139,13 @@ export default function Home() {
             const el = titleRefs.current[i];
             if (!el || !setY[i]) continue;
 
-            // Each title gets its own progress, so multiple titles can be transitioning at once
+            // Each title gets own progress, so multiple titles transitioning at once
             const t = clamp((fractionalIndex - (i - lead)) / dur, 0, 1);
 
             const y = lerp(yBottom(i), yTop(i), t);
             setY[i](y);
 
-            // Opacity: keep everything visible; gently emphasize the title(s) that are mid-transition
+            // Opacity
             if (setO[i]) {
               // peak around t=0.5, never disappears
               const peak = 1 - Math.abs(t - 0.5) * 2; // 0..1
@@ -225,7 +224,7 @@ export default function Home() {
         <div className="home-atf-image"></div>
       </motion.section>
 
-      {/* PINNED PROJECTS */}
+      {/* PROJECTS */}
       <section className="gsapProjects" ref={sectionRef}>
         {/* LEFT: Counter */}
         <div className="projectsLeft">
@@ -265,7 +264,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* RIGHT: Titles (two piles + one sliding title) */}
+        {/* RIGHT: Titles */}
         <div className="projectsRight">
           <nav className="titlesShell" ref={titlesShellRef} aria-label="Projects">
             {projects.map((p, i) => (
