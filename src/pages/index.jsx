@@ -9,8 +9,8 @@ export default function Home() {
   return (
     <>
       <HomeATF />
-      <div className="desktop"><Projects /></div>
-      <div className="mobile"><ProjectsMobile /></div>
+      <div className="tablet-desktop"><Projects /></div>
+      <div className="tablet-mobile"><ProjectsMobile /></div>
     </>
   );
 }

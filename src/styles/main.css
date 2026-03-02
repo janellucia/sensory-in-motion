@@ -55,17 +55,14 @@ h1 {
 }
 
 h2 {
-  font-size: 44px;
   font-size: 33px;
 }
 
 h3 {
-  font-size: 33px;
   font-size: 22px;
 }
 
 h4 {
-  font-size: 22px;
   font-size: 20px;
 }
 
@@ -83,24 +80,102 @@ a {
   text-decoration: none;
 }
 
+@media (max-width: 1025px) {
+  h1 {
+    font-size: 26px;
+  }
+
+  h2 {
+
+    font-size: 24px;
+  }
+
+  h3 {
+    font-size: 22px;
+  }
+
+  h4 {
+    font-size: 20px;
+  }
+
+  h5 {
+    font-size: 18px;
+  }
+
+  h6 {
+    font-size: 16px;
+  }
+
+  p,
+  a {
+    font: 14px;
+  }
+}
+
+@media (max-width: 650px) {
+  h1 {
+    font-size: 22px;
+  }
+
+  h2 {
+
+    font-size: 20px;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
+
+  h4 {
+    font-size: 16px;
+  }
+
+  h5 {
+    font-size: 14px;
+  }
+
+  h6 {
+    font-size: 14px;
+  }
+
+  p,
+  a {
+    font: 12px;
+  }
+}
+
 /* ===============
    Universal responsive
 ==================*/
 
 .mobile {
-  display: none;
+  display: none !important;
 }
 
 @media (max-width: 650px) {
   .desktop {
-    display: none;
+    display: none !important;
   }
 
   .mobile {
-    display: block;
+    display: block !important;
   }
 }
 
+
+.tablet-mobile {
+  display: none !important;
+}
+
+@media (max-width: 1025px) {
+  .tablet-desktop {
+    display: none !important;
+  }
+
+  .tablet-mobile {
+    display: block !important;
+  }
+}
 
 /* ===============
    Cursor

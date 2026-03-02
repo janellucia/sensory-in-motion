@@ -12,7 +12,7 @@ export default function Header() {
           </Link>
         </span>
 
-        <span><p>Motion-Driven Creative Developer</p></span>
+        <span className="desktop"><p>Motion-Driven Creative Developer</p></span>
 
         <ul>
           <li>

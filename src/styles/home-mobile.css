@@ -13,17 +13,13 @@
 /* Sticky counter bar */
 .projectsMobileCounterBar {
   position: sticky;
-  top: 0;
+  top: 50px;
   z-index: 999;
-  padding: calc(env(safe-area-inset-top, 0px) + 12px) 16px 12px;
-
-  /* lock size so it never "jumps" */
+  padding: .5rem 1rem;
   min-height: calc(env(safe-area-inset-top, 0px) + 68px);
-
-  /* optional: keeps it readable over images */
-  background: rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: var(--black);
+  width: calc(100% - 2rem);
+  margin-left: -1rem;
 }
 
 .projectsMobileCounterBar,
@@ -59,11 +55,20 @@
 .projectsMobileList {
   display: grid;
   gap: 22px;
-  padding: 0 0 28px;
 }
 
 .projectsMobileItem {
-  width: 100%;
+  width: calc(100% - 4rem);
+  padding: 1rem 2rem;
+}
+
+@media (max-width: 650px) {
+  .projectsMobileItem {
+    width: calc(100% - .5rem);
+    padding: 0rem;
+    margin-left: -.5rem;
+    ;
+  }
 }
 
 .projectsMobileLink {
@@ -74,10 +79,7 @@
 
 /* 100% width media */
 .projectsMobileMediaWrap {
-  width: 100vw;
-  /* full bleed */
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
+  width: 100%;
 }
 
 .projectsMobileMedia {

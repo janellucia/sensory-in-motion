@@ -25,7 +25,7 @@
   top: 0;
   bottom: 0;
   width: var(--lineW);
-  background: currentColor;
+  background: var(--white);
   opacity: var(--lineOpacity);
   pointer-events: none;
   z-index: 5;
@@ -73,10 +73,7 @@
   top: 0;
   bottom: var(--imgZone);
 
-  padding-left: var(--padX);
-  padding-right: var(--padX);
-  padding-top: clamp(28px, 6vh, 92px);
-  padding-bottom: var(--padY);
+  padding: 1rem;
 
   display: flex;
   flex-direction: column;
@@ -130,9 +127,18 @@
 /* RESPONSIVE */
 @media (max-width: 1025px) {
   .homeATF {
+    width: 100%;
+    height: 60vh;
+  }
+}
+
+@media (max-width: 650px) {
+  .homeATF {
     height: auto;
-    min-height: 33vh;
+    min-height: 66vh;
     padding-top: 90px;
+    display: flex;
+    flex-direction: column;
   }
 
   .homeATF__vline,
@@ -147,19 +153,24 @@
   .homeATF__imageZone {
     position: relative;
     inset: auto;
+    max-width: 98%;
   }
 
-  .homeATF__text {
-    padding: clamp(22px, 6vw, 34px);
-    padding-top: clamp(28px, 9vw, 48px);
-  }
 
+  .homeATF__text,
   .homeATF__meta {
-    padding: 0 clamp(22px, 6vw, 34px) 14px;
+    padding: 0;
+    padding-bottom: 20px;
+    order: 2;
   }
 
   .homeATF__imageZone {
-    display: none !important;
+    max-width: 300px;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 30px;
+    order: 1;
+
   }
 
 }

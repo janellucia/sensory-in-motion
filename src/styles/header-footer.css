@@ -23,6 +23,14 @@ header nav ul {
   width: 33%;
 }
 
+@media (max-width: 650px) {
+
+  header nav span,
+  header nav ul {
+    width: 50%;
+  }
+}
+
 header nav span:nth-child(2) {
   display: flex;
   justify-content: center;

@@ -1,7 +1,6 @@
-// src/pages/index.jsx
+// src/pages/Projects.jsx
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
@@ -48,6 +47,7 @@ export default function Projects() {
     const shellH = shell.getBoundingClientRect().height;
     const btnH = first.getBoundingClientRect().height || 26;
 
+    // MUST match CSS gap
     const gap = 10;
     const step = btnH + gap;
 
@@ -62,15 +62,17 @@ export default function Projects() {
   useEffect(() => {
     const section = sectionRef.current;
     const track = trackRef.current;
-    const scroller = track?.parentElement;
+    const scroller = track?.parentElement; // .projectsCenter
     if (!section || !track || !scroller) return;
 
     const items = itemRefs.current.filter(Boolean);
     if (!items.length) return;
 
+    // (hot reload / route changes)
     ScrollTrigger.getAll().forEach((t) => t.kill());
 
     const setup = () => {
+      // Slides measurements
       const itemH = items[0].offsetHeight;
       const styles = getComputedStyle(track);
       const rawGap = styles.rowGap || "0";
@@ -79,11 +81,13 @@ export default function Projects() {
 
       const viewportH = scroller.getBoundingClientRect().height;
 
+      // Center first item at start
       const startY = (viewportH - itemH) / 2.5;
       const totalTravel = step * (items.length - 0.8);
 
       measureTitles();
 
+      // fast setters for titles
       const setY = titleRefs.current.map((el) =>
         el ? gsap.quickSetter(el, "y", "px") : null
       );
@@ -91,15 +95,20 @@ export default function Projects() {
         el ? gsap.quickSetter(el, "opacity") : null
       );
 
+      // ✅ Counter: cache setter (no per-frame gsap.set object alloc)
       const setCounterY = counterWrapRef.current
         ? gsap.quickSetter(counterWrapRef.current, "y", "px")
         : null;
 
-      let counterOffset = itemH / 2 + 80;
+      // ✅ define the offset once (200px above/below image edge)
+      // NOTE: we intentionally do NOT read counter height every frame.
+      let counterOffset = itemH / 2 + 200;
 
+      // ✅ Initial positions immediately on load (BEFORE ScrollTrigger starts)
       gsap.set(track, { y: startY });
       if (setCounterY) setCounterY(-counterOffset);
 
+      // Set initial title positions immediately (so they don't bunch at top:0)
       function initTitles() {
         const titleIndex = 0;
         const clampedActive = 0;
@@ -139,16 +148,23 @@ export default function Projects() {
         onUpdate: (self) => {
           const travel = totalTravel * self.progress;
 
+          // Move the slides track (images)
           gsap.set(track, { y: startY - travel });
 
+          // Image index driver
           const fractionalIndex = step ? travel / step : 0;
+
+          // Title driver (0..total)
+          const titleIndex = self.progress * total;
+
+          // Active for image emphasis + counter
           const idx = Math.round(fractionalIndex);
           const clampedActive = clamp(idx, 0, items.length - 1);
           setActiveIndex(clampedActive);
 
-          const titleIndex = self.progress * total;
-
+          // Titles
           const { available, step: titleStep } = titleGeomRef.current;
+
           const yTop = (i) => i * titleStep;
           const yBottom = (i) => available - (total - 1 - i) * titleStep;
 
@@ -170,13 +186,29 @@ export default function Projects() {
             el.classList.toggle("isActive", i === clampedActive);
           }
 
+          // ✅ Counter drift (smooth)
           if (setCounterY) {
             const p = gsap.parseEase("power2.inOut")(self.progress);
             setCounterY(lerp(-counterOffset, counterOffset, p));
           }
         },
+        onRefresh: () => {
+          // Re-measure titles
+          measureTitles();
+          initTitles();
+
+          // Re-center track after refresh
+          const newViewportH = scroller.getBoundingClientRect().height;
+          const newStartY = (newViewportH - itemH) / 2;
+          gsap.set(track, { y: newStartY });
+
+          // Recompute counter offset (based on item height)
+          counterOffset = itemH / 2 + 100;
+          if (setCounterY) setCounterY(-counterOffset);
+        },
       });
 
+      // Snap trigger
       ScrollTrigger.create({
         trigger: section,
         start: "top top",
@@ -206,6 +238,15 @@ export default function Projects() {
     };
   }, [total]);
 
+  useEffect(() => {
+    if (document.fonts?.ready) {
+      document.fonts.ready.then(() => {
+        measureTitles();
+        ScrollTrigger.refresh();
+      });
+    }
+  }, []);
+
   const jumpToIndex = (i) => {
     const st = ScrollTrigger.getAll().find(
       (t) => t?.vars?.trigger === sectionRef.current
@@ -217,61 +258,58 @@ export default function Projects() {
   };
 
   return (
-    <motion.main>
-
-      <section className="gsapProjects" ref={sectionRef}>
-        <div className="projectsLeft">
-          <div className="counter" ref={counterWrapRef}>
-            <span className="counterBig">{pad2(activeIndex + 1)}</span>
-            <span className="counterSmall">/{pad2(total)}</span>
-          </div>
+    <section className="gsapProjects" ref={sectionRef}>
+      <div className="projectsLeft">
+        <div className="counter" ref={counterWrapRef}>
+          <span className="counterBig">{pad2(activeIndex + 1)}</span>
+          <span className="counterSmall">/{pad2(total)}</span>
         </div>
+      </div>
 
-        <div className="projectsCenter">
-          <div className="projectsTrack" ref={trackRef}>
-            {projects.map((p, i) => {
-              const isActive = i === activeIndex;
+      <div className="projectsCenter">
+        <div className="projectsTrack" ref={trackRef}>
+          {projects.map((p, i) => {
+            const isActive = i === activeIndex;
 
-              return (
-                <article
-                  key={p.id}
-                  className={`projectItem ${isActive ? "isActive" : ""}`}
-                  ref={(el) => (itemRefs.current[i] = el)}
-                >
-                  <Link to={p.route} className="projectLink">
-                    <div className="projectMediaWrap">
-                      <img
-                        src={p.media?.[0]?.src}
-                        alt={p.media?.[0]?.alt || p.title}
-                        className="projectMedia"
-                      />
-                    </div>
-                    <p className="projectSkills">
-                      {p.skills?.join(", ")}
-                    </p>
-                  </Link>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="projectsRight">
-          <nav className="titlesShell" ref={titlesShellRef}>
-            {projects.map((p, i) => (
-              <button
+            return (
+              <article
                 key={p.id}
-                type="button"
-                className="navItem"
-                ref={(el) => (titleRefs.current[i] = el)}
-                onClick={() => jumpToIndex(i)}
+                className={`projectItem ${isActive ? "isActive" : ""}`}
+                ref={(el) => (itemRefs.current[i] = el)}
               >
-                {p.title}
-              </button>
-            ))}
-          </nav>
+                <Link to={p.route} className="projectLink" aria-label={p.title}>
+                  <div className="projectMediaWrap">
+                    <img
+                      src={p.media?.[0]?.src}
+                      alt={p.media?.[0]?.alt || p.title}
+                      className="projectMedia"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  <p className="projectSkills">{p.skills?.join(", ")}</p>
+                </Link>
+              </article>
+            );
+          })}
         </div>
-      </section>
-    </motion.main>
+      </div>
+
+      <div className="projectsRight">
+        <nav className="titlesShell" ref={titlesShellRef} aria-label="Projects">
+          {projects.map((p, i) => (
+            <button
+              key={p.id}
+              type="button"
+              className="navItem"
+              ref={(el) => (titleRefs.current[i] = el)}
+              onClick={() => jumpToIndex(i)}
+            >
+              {p.title}
+            </button>
+          ))}
+        </nav>
+      </div>
+    </section>
   );
 }
