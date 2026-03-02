@@ -128,10 +128,11 @@
 }
 
 /* RESPONSIVE */
-@media (max-width: 900px) {
+@media (max-width: 1025px) {
   .homeATF {
     height: auto;
-    min-height: 100svh;
+    min-height: 33vh;
+    padding-top: 90px;
   }
 
   .homeATF__vline,
@@ -158,11 +159,7 @@
   }
 
   .homeATF__imageZone {
-    padding: clamp(16px, 6vw, 34px);
+    display: none !important;
   }
 
-  .homeATF__img {
-    width: 100%;
-    aspect-ratio: 16 / 10;
-  }
 }

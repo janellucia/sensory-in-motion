@@ -29,6 +29,21 @@
   width: 20%;
 }
 
+@media (max-width: 900px) {
+  .about-page-wrapper .left {
+    width: 95%;
+    margin-right: 0;
+    margin-bottom: 50px;
+  }
+
+  .about-page-wrapper .middle,
+  .about-page-wrapper .right {
+    width: 45%;
+    margin-right: 2.5%;
+  }
+
+}
+
 .about-page-wrapper ul {
   padding: 0;
   margin: 0;

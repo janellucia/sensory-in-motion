@@ -1,0 +1,119 @@
+/* ===============================
+   Projects Mobile
+   - sticky counter
+   - full-bleed images
+   - title left under image
+   - skills bottom-right under image
+================================ */
+
+.projectsMobile {
+  width: 100%;
+}
+
+/* Sticky counter bar */
+.projectsMobileCounterBar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  padding: calc(env(safe-area-inset-top, 0px) + 12px) 16px 12px;
+
+  /* lock size so it never "jumps" */
+  min-height: calc(env(safe-area-inset-top, 0px) + 68px);
+
+  /* optional: keeps it readable over images */
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.projectsMobileCounterBar,
+.projectsMobileCounter {
+  transform: none !important;
+}
+
+.projectsMobileCounter {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.projectsMobileCounterBig {
+  display: inline-block;
+  width: 2ch;
+  font-size: 48px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+.projectsMobileCounterSmall {
+  font-size: 18px;
+  opacity: 0.85;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* List layout */
+.projectsMobileList {
+  display: grid;
+  gap: 22px;
+  padding: 0 0 28px;
+}
+
+.projectsMobileItem {
+  width: 100%;
+}
+
+.projectsMobileLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 100% width media */
+.projectsMobileMediaWrap {
+  width: 100vw;
+  /* full bleed */
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+.projectsMobileMedia {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* Meta row under image */
+.projectsMobileMeta {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+
+  padding: 12px 16px 0;
+  align-items: flex-end;
+  /* ✅ skills sit bottom-right */
+}
+
+.projectsMobileTitle {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  text-align: left;
+  flex: 1;
+}
+
+.projectsMobileSkills {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  opacity: 0.75;
+  text-transform: lowercase;
+  text-align: right;
+
+  max-width: 45%;
+}
