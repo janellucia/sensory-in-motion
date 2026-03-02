@@ -13,7 +13,7 @@ import HomeATF from "../components/home-atf";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// 🩵 Project Slider
+// Project Slider
 function pad2(n) {
   return String(n).padStart(2, "0");
 }
@@ -23,7 +23,6 @@ const lerp = (a, b, t) => a + (b - a) * t;
 
 export default function Home() {
   const total = projects.length;
-
   const [activeIndex, setActiveIndex] = useState(0);
 
   const sectionRef = useRef(null);
@@ -32,15 +31,15 @@ export default function Home() {
 
   const counterWrapRef = useRef(null);
 
-  // 🩵 Project Titles
+  // Project Titles
   const titlesShellRef = useRef(null);
   const titleRefs = useRef([]);
 
   // cached title geometry
   const titleGeomRef = useRef({
-    available: 0, // shellH - btnH
+    available: 0,
     btnH: 26,
-    step: 36, // btnH + gap
+    step: 36,
   });
 
   const measureTitles = () => {
@@ -51,7 +50,7 @@ export default function Home() {
     const shellH = shell.getBoundingClientRect().height;
     const btnH = first.getBoundingClientRect().height || 26;
 
-    // MUST match CSS gap below
+    // MUST match CSS gap
     const gap = 10;
     const step = btnH + gap;
 
@@ -86,14 +85,61 @@ export default function Home() {
       const viewportH = scroller.getBoundingClientRect().height;
 
       // Center first item at start
-      const startY = (viewportH - itemH) / 2;
-      const totalTravel = step * (items.length - 1);
+      const startY = (viewportH - itemH) / 2.5;
+      const totalTravel = step * (items.length - .8);
 
       measureTitles();
 
       // fast setters for titles
-      const setY = titleRefs.current.map((el) => (el ? gsap.quickSetter(el, "y", "px") : null));
-      const setO = titleRefs.current.map((el) => (el ? gsap.quickSetter(el, "opacity") : null));
+      const setY = titleRefs.current.map((el) =>
+        el ? gsap.quickSetter(el, "y", "px") : null
+      );
+      const setO = titleRefs.current.map((el) =>
+        el ? gsap.quickSetter(el, "opacity") : null
+      );
+
+      // ✅ Counter: cache setter (no per-frame gsap.set object alloc)
+      const setCounterY = counterWrapRef.current
+        ? gsap.quickSetter(counterWrapRef.current, "y", "px")
+        : null;
+
+      // ✅ define the offset once (200px above/below image edge)
+      // NOTE: we intentionally do NOT read counter height every frame.
+      let counterOffset = itemH / 2 + 200;
+
+      // ✅ Initial positions immediately on load (BEFORE ScrollTrigger starts)
+      gsap.set(track, { y: startY });
+      if (setCounterY) setCounterY(-counterOffset);
+
+      // Set initial title positions immediately (so they don't bunch at top:0)
+      function initTitles() {
+        const titleIndex = 0;
+        const clampedActive = 0;
+
+        const { available, step: titleStep } = titleGeomRef.current;
+        const yTop = (i) => i * titleStep;
+        const yBottom = (i) => available - (total - 1 - i) * titleStep;
+
+        const lead = 0.4;
+        const dur = 1 + lead;
+
+        for (let i = 0; i < total; i++) {
+          const el = titleRefs.current[i];
+          if (!el || !setY[i]) continue;
+
+          const t = clamp((titleIndex - (i - lead)) / dur, 0, 1);
+          setY[i](lerp(yBottom(i), yTop(i), t));
+
+          if (setO[i]) {
+            const peak = 1 - Math.abs(t - 0.5) * 2;
+            setO[i](0.3 + peak * 0.7);
+          }
+
+          el.classList.toggle("isActive", i === clampedActive);
+        }
+      }
+
+      initTitles();
 
       const pin = ScrollTrigger.create({
         trigger: section,
@@ -108,58 +154,64 @@ export default function Home() {
           // Move the slides track (images)
           gsap.set(track, { y: startY - travel });
 
-          // Same index driver as images
+          // Image index driver
           const fractionalIndex = step ? travel / step : 0;
+
+          // Title driver (0..total)
+          const titleIndex = self.progress * total;
 
           // Active for image emphasis + counter
           const idx = Math.round(fractionalIndex);
           const clampedActive = clamp(idx, 0, items.length - 1);
           setActiveIndex(clampedActive);
 
-          // 🩵 TITLE BEHAVIOR
+          // Titles
           const { available, step: titleStep } = titleGeomRef.current;
 
-          // positions for stacks
           const yTop = (i) => i * titleStep;
           const yBottom = (i) => available - (total - 1 - i) * titleStep;
 
-          // overlap tuning:
           const lead = 0.4;
-          const dur = 1 + lead; // 1.5 steps
+          const dur = 1 + lead;
 
           for (let i = 0; i < total; i++) {
             const el = titleRefs.current[i];
             if (!el || !setY[i]) continue;
 
-            // Each title gets own progress, so multiple titles transitioning at once
-            const t = clamp((fractionalIndex - (i - lead)) / dur, 0, 1);
+            const t = clamp((titleIndex - (i - lead)) / dur, 0, 1);
+            setY[i](lerp(yBottom(i), yTop(i), t));
 
-            const y = lerp(yBottom(i), yTop(i), t);
-            setY[i](y);
-
-            // Opacity
             if (setO[i]) {
-              // peak around t=0.5, never disappears
-              const peak = 1 - Math.abs(t - 0.5) * 2; // 0..1
-              const opacity = 0.3 + peak * 0.7;       // 0.3..1
-              setO[i](opacity);
+              const peak = 1 - Math.abs(t - 0.5) * 2;
+              setO[i](0.3 + peak * 0.7);
             }
 
             el.classList.toggle("isActive", i === clampedActive);
           }
 
-
-          // 🩵 Counter drift
-          if (counterWrapRef.current) {
-            gsap.set(counterWrapRef.current, { y: self.progress * 70 });
+          // ✅ Counter drift (smooth)
+          if (setCounterY) {
+            const p = gsap.parseEase("power2.inOut")(self.progress);
+            setCounterY(lerp(-counterOffset, counterOffset, p));
           }
         },
         onRefresh: () => {
+          // Re-measure titles
           measureTitles();
+          initTitles();
+
+          // Re-center track after refresh
+          const newViewportH = scroller.getBoundingClientRect().height;
+          const newStartY = (newViewportH - itemH) / 2;
+          gsap.set(track, { y: newStartY });
+
+          // Recompute counter offset (based on item height)
+          counterOffset = itemH / 2 + 100;
+          if (setCounterY) setCounterY(-counterOffset);
         },
       });
 
-      // 🩵 Snap to each item
+      // Snap trigger
       ScrollTrigger.create({
         trigger: section,
         start: "top top",
@@ -194,10 +246,21 @@ export default function Home() {
       window.removeEventListener("resize", onResize);
       cleanup?.();
     };
+  }, [total]);
+
+  useEffect(() => {
+    if (document.fonts?.ready) {
+      document.fonts.ready.then(() => {
+        measureTitles();
+        ScrollTrigger.refresh();
+      });
+    }
   }, []);
 
   const jumpToIndex = (i) => {
-    const st = ScrollTrigger.getAll().find((t) => t?.vars?.trigger === sectionRef.current);
+    const st = ScrollTrigger.getAll().find(
+      (t) => t?.vars?.trigger === sectionRef.current
+    );
     if (!st || total <= 1) return;
 
     const progress = i / (total - 1);
@@ -206,12 +269,9 @@ export default function Home() {
 
   return (
     <motion.main>
-      {/* ATF */}
       <HomeATF />
 
-      {/* PROJECTS */}
       <section className="gsapProjects" ref={sectionRef}>
-        {/* LEFT: Counter */}
         <div className="projectsLeft">
           <div className="counter" ref={counterWrapRef}>
             <span className="counterBig">{pad2(activeIndex + 1)}</span>
@@ -219,7 +279,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* CENTER: Projects */}
         <div className="projectsCenter">
           <div className="projectsTrack" ref={trackRef}>
             {projects.map((p, i) => {
@@ -249,7 +308,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* RIGHT: Titles */}
         <div className="projectsRight">
           <nav className="titlesShell" ref={titlesShellRef} aria-label="Projects">
             {projects.map((p, i) => (

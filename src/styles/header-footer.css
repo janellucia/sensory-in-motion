@@ -54,13 +54,51 @@ header nav p {
   text-transform: uppercase;
 }
 
+/* ===============================
+   Footer
+================================ */
 
 footer {
   display: flex;
   justify-content: center;
-  width: 100vw;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
-footer p {
-  text-align: center;
+footer .top-row,
+footer .bottom-row {
+  width: 96%;
+  padding: 2%;
+}
+
+.top-row h3 {
+  font-size: 44px;
+}
+
+footer .bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.bottom-row .reel {
+  width: 40%;
+  max-width: 555px;
+  margin-right: 50px;
+}
+
+.bottom-row .footer-menu {
+  font-size: 33px;
+  text-align: right;
+}
+
+.bottom-row .footer-menu ul {
+  padding: 0;
+  margin: 0;
+}
+
+.bottom-row .footer-menu ul li {
+  list-style: none;
+  padding: 0;
+  line-height: 2;
 }

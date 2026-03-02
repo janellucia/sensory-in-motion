@@ -4,7 +4,7 @@ import '../styles/header-footer.css'
 export default function Header() {
 
   return (
-    <header>
+    <header className="site-header">
       <nav>
         <span>
           <Link to="/" className="logo">

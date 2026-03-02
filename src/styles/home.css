@@ -9,7 +9,8 @@
   grid-template-columns: 180px 1fr 260px;
   gap: 1rem;
   padding: 1rem;
-  overflow: hidden;
+  overflow: visible;
+  /* ✅ allow counter/titles to move outside without clipping */
 }
 
 /* Side columns */
@@ -21,7 +22,8 @@
   display: flex;
   gap: 0;
   align-items: center;
-  z-index: 2;
+  z-index: 10;
+  /* ✅ ensure counter/titles sit above the center images */
 }
 
 /* ===============================
@@ -66,6 +68,7 @@
 .projectsCenter {
   height: calc(100vh - 48px);
   overflow: hidden;
+  /* ✅ keep clipping only for the moving track */
   display: flex;
   align-items: stretch;
   justify-content: center;

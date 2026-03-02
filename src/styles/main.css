@@ -35,8 +35,8 @@ body {
 }
 
 *::selection {
-  background-color: var(--red);
-  color: var(--white);
+  background-color: var(--purple);
+  color: var(--black);
 }
 
 h1,

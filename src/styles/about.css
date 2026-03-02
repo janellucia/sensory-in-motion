@@ -1,0 +1,53 @@
+.about-page .site-header,
+.about-page footer {
+  display: none !important;
+}
+
+.about-page-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 90px 0;
+}
+
+.about-page-wrapper h1 {
+  width: 100%;
+  font-size: 77px;
+  line-height: 1;
+}
+
+.about-page-wrapper .left {
+  width: 45%;
+  margin-right: 4%;
+}
+
+.about-page-wrapper .middle {
+  width: 25%;
+  margin-right: 4%;
+}
+
+.about-page-wrapper .right {
+  width: 20%;
+}
+
+.about-page-wrapper ul {
+  padding: 0;
+  margin: 0;
+}
+
+.about-page-wrapper li {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+.about-page-wrapper li p,
+.about-page-wrapper li a {
+  line-height: 1;
+  margin: 10px 0;
+}
+
+.about-page-wrapper .sub-title {
+  text-transform: uppercase;
+  opacity: 0.8;
+  margin-bottom: 7px;
+}
