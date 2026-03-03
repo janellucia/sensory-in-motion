@@ -87,6 +87,7 @@ footer .bottom-row {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  flex-wrap: wrap;
 }
 
 .bottom-row .reel {
@@ -100,6 +101,8 @@ footer .bottom-row {
   text-align: right;
 }
 
+
+
 .bottom-row .footer-menu ul {
   padding: 0;
   margin: 0;
@@ -109,4 +112,33 @@ footer .bottom-row {
   list-style: none;
   padding: 0;
   line-height: 2;
+}
+
+
+@media (max-width: 1025px) {
+  .top-row h3 {
+    font-size: 33px;
+  }
+
+  .bottom-row .footer-menu {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 650px) {
+  .top-row h3 {
+    font-size: 28px;
+  }
+
+  .bottom-row .reel {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 30px;
+  }
+
+  .bottom-row .footer-menu {
+    font-size: 22px;
+    text-align: left;
+    width: 100%;
+  }
 }

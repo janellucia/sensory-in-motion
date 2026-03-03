@@ -23,7 +23,7 @@
   align-items: center;
   /* ✅ put it back */
   z-index: 10;
-  width: 400px;
+  width: 350px;
 }
 
 /* ===============================
@@ -158,8 +158,8 @@
   white-space: nowrap;
   letter-spacing: 0.02em;
   line-height: 1.15;
-  padding: 2px 0;
-  font-size: 28px;
+  padding: 5px 0;
+  font-size: 33px;
   opacity: 0.55;
   will-change: transform, opacity;
 }

@@ -1,18 +1,18 @@
 // src/pages/index-data.jsx
-import Project1 from "../assets/home/1.jpg";
-import Project2 from "../assets/home/2.jpg";
-import Project3 from "../assets/home/3.jpg";
-import Project4 from "../assets/home/4.jpg";
-import Project5 from "../assets/home/5.jpg";
-import Project6 from "../assets/home/6.jpg";
+import Project1 from "../assets/home/nocturne.jpg";
+import Project2 from "../assets/home/atelier.jpg";
+import Project3 from "../assets/home/mazare.jpg";
+import Project4 from "../assets/home/soft-form.jpg";
+import Project5 from "../assets/home/obsidian.jpg";
+import Project6 from "../assets/home/phase-two.jpg";
 
 
 const projects = [
   {
     id: "01",
-    route: "/romy-marais",
-    title: "Romy Marais",
-    skills: ["branding", "web design"],
+    route: "/nocturne",
+    title: "Nocturne",
+    skills: ["music as data", "emotional OPen"],
     media: [
       { type: "image", src: Project1, alt: "" }
     ],
@@ -20,9 +20,9 @@ const projects = [
   },
   {
     id: "02",
-    route: "/the-visual-edit",
-    title: "The Visual Edit",
-    skills: ["Editorial Design"],
+    route: "/atelier",
+    title: "Atelier",
+    skills: ["Modern Agency Portfolio"],
     media: [
       { type: "image", src: Project2, alt: "" }
     ],
@@ -30,9 +30,9 @@ const projects = [
   },
   {
     id: "03",
-    route: "/daniela-bosco",
-    title: "Daniela Bosco",
-    skills: ["branding", "web design"],
+    route: "/mazare",
+    title: "Mazaré",
+    skills: ["Runway Reveal", "Scroll Architecture"],
     media: [
       { type: "image", src: Project3, alt: "" }
     ],
@@ -40,9 +40,9 @@ const projects = [
   },
   {
     id: "04",
-    route: "/lorangerie-photographie",
-    title: "LOrangerie Photographie",
-    skills: ["Editorial Design"],
+    route: "/soft-form",
+    title: "Soft Form",
+    skills: ["Beauty Editorial Lab", "Campaign-level polish"],
     media: [
       { type: "image", src: Project4, alt: "" }
     ],
@@ -50,9 +50,9 @@ const projects = [
   },
   {
     id: "05",
-    route: "/bad-girls-collective",
-    title: "Bad Girls Collective",
-    skills: ["branding", "web design"],
+    route: "/obsidian",
+    title: "Obsidian",
+    skills: ["branding", "paralax images"],
     media: [
       { type: "image", src: Project5, alt: "" }
     ],
@@ -60,9 +60,9 @@ const projects = [
   },
   {
     id: "06",
-    route: "/onceived-space",
-    title: "Conceived Space",
-    skills: ["Editorial Design"],
+    route: "/phase-two",
+    title: "Phase II",
+    skills: ["Texture Study"],
     media: [
       { type: "image", src: Project6, alt: "" }
     ],
